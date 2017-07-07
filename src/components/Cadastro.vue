@@ -27,10 +27,13 @@ export default {
   },
   methods: {
     save: function () {
-      console.log(this.contato).then(() => {
+      this.$store.dispatch('newContato', this.contato).then(() => {
         this.$router.push('/lista')
       })
     }
+  },
+  created () {
+    this.$store.dispatch('getList')
   }
 }
 </script>
