@@ -32,8 +32,10 @@ export default {
       })
     }
   },
-  created () {
-    this.$store.dispatch('getList')
+  computed: {
+    lists () {
+      return this.$store.state.contatoList
+    }
   }
 }
 </script>
