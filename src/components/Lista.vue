@@ -1,16 +1,16 @@
 <template>
   <div class="container">
     <h1>Lista de contatos</h1>
-      <input type="text" class="form-control filter" id="filter" placeholder="Filter...">
+      <input type="text" class="form-control filter" id="filter" v-model="filter" placeholder="Filter...">
       <table class="table table-striped">
         <thead>
-            <th v-for="coluna in colunasFiltered">
-              <a href='#' @click.prevent="sortBy(coluna)">{{ coluna }}</a>
+            <th v-for="coluna in colunas">
+              <a href='#' @click.prevent="sortBy(coluna)">{{ coluna | ucwords }}</a>
             </th>
             <th></th>
         </thead>
         <tbody>
-            <tr v-for="(item,k) in dados">
+            <tr v-for="(item,k) in dadosFiltered">
               <td>{{ k + 1 }}</td>
               <td>{{ item.name }}</td>
               <td>{{ item.email }}</td>
@@ -30,16 +30,17 @@ export default {
   data: function () {
     return {
       order: {
-        keys: ['#'],
-        sort: ['desc']
+        keys: ['nome'],
+        sort: ['asc']
       },
       colunas: [
         '#',
-        'Nome',
-        'Email',
-        'Número'
+        'nome',
+        'email',
+        'número'
       ],
-      dados: this.$store.state.contatoList
+      dados: this.$store.state.contatoList,
+      filter: ''
     }
   },
   methods: {
@@ -48,14 +49,22 @@ export default {
       this.$store.dispatch('getId', indice)
     },
     sortBy: function (coluna) {
-      console.log('deu certo')
       this.order.keys = coluna
       this.order.sort = this.order.sort == 'desc' ? 'asc' : 'desc'
     }
   },
   computed: {
-    colunasFiltered () {
-      return _.orderBy(this.colunas, this.order.keys, this.order.sort)
+    dadosFiltered () {
+      let colecao = _.orderBy(this.dados, this.order.keys, this.order.sort)
+
+      return _.filter(colecao, item => {
+        return item.name.indexOf(this.filter) >= 0
+      })
+    }
+  },
+  filters: {
+    ucwords (value) {
+      return value.charAt(0).toUpperCase() + value.slice(1)
     }
   }
 }
