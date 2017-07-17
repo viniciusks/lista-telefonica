@@ -31,11 +31,6 @@ export default {
         this.$router.push('/lista')
       })
     }
-  },
-  computed: {
-    lists () {
-      return this.$store.state.contatoList
-    }
   }
 }
 </script>
