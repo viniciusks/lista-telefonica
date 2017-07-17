@@ -5,6 +5,9 @@ import Vue from 'vue'
   
 // Vue.use(VueResource)
 
+// Load the full build.
+var _ = require('lodash');
+
 import App from './App'
 import router from './router'
 import store from './store'

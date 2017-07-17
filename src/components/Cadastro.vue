@@ -3,11 +3,11 @@
     <h1>Cadastro</h1>
     <form @submit.prevent="save">
       <label>Nome: </label>
-      <input type="text" class="form-control" v-model="contato.name" id="name" placeholder="Digite o nome do contato...">
+      <input type="text" class="form-control cadastro" v-model="contato.name" id="name" placeholder="Digite o nome do contato...">
       <label>Email: </label>
-      <input type="email" class="form-control" v-model="contato.email" id="email" placeholder="Digite o email do contato...">
+      <input type="email" class="form-control cadastro" v-model="contato.email" id="email" placeholder="Digite o email do contato...">
       <label>Número: </label>
-      <input type="text" class="form-control" v-model="contato.numero" id="numero" placeholder="Digite o número do contato...">
+      <input type="text" class="form-control cadastro" v-model="contato.numero" id="numero" placeholder="Digite o número do contato...">
       <input type="submit" class="btn btn-primary" value="Salvar">
     </form>
   </div>
@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style>
-input {
+.cadastro {
   margin: 5px auto;
   width: 300px !important;
 }

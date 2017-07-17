@@ -3,11 +3,11 @@
     <h1>Edição</h1>
     <form @submit.prevent="save">
       <label>Nome: </label>
-      <input type="text" class="form-control" id="name" :value="dados[0].name" placeholder="Digite o nome do contato...">
+      <input type="text" class="form-control edit" id="name" v-model="dados.item.name" placeholder="Digite o nome do contato...">
       <label>Email: </label>
-      <input type="email" class="form-control" id="email" :value="dados[0].email" placeholder="Digite o email do contato...">
+      <input type="email" class="form-control edit" id="email" v-model="dados.item.email" placeholder="Digite o email do contato...">
       <label>Número: </label>
-      <input type="text" class="form-control" id="numero" :value="dados[0].numero" placeholder="Digite o número do contato...">
+      <input type="text" class="form-control edit" id="numero" v-model="dados.item.numero" placeholder="Digite o número do contato...">
       <input type="submit" class="btn btn-primary" value="Salvar">
     </form>
   </div>
@@ -18,19 +18,24 @@ export default {
   name: 'editar',
   data: function () {
     return {
-      dados: this.$store.state.contatoList
+      dados: {
+          item: this.$store.state.contatoList[this.$store.state.id],
+          id: this.$store.state.id
+      }
     }
   },
   methods: {
     save: function () {
-      this.$store.dispatch('editContato', this.dados)
+      this.$store.dispatch('editContato', this.dados).then(() => {
+        this.$router.push('/lista')
+      })
     }
   }
 }
 </script>
 
 <style>
-input {
+.edit {
   margin: 5px auto;
   width: 300px !important;
 }

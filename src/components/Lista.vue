@@ -1,10 +1,11 @@
 <template>
   <div class="container">
     <h1>Lista de contatos</h1>
+      <input type="text" class="form-control filter" id="filter" placeholder="Filter...">
       <table class="table table-striped">
         <thead>
-            <th v-for="coluna in colunas">
-              <a>{{ coluna }}</a>
+            <th v-for="coluna in colunasFiltered">
+              <a href='#' @click.prevent="sortBy(coluna)">{{ coluna }}</a>
             </th>
             <th></th>
         </thead>
@@ -22,10 +23,16 @@
 </template>
 
 <script>
+import _ from 'lodash'
+
 export default {
   name: 'lista',
   data: function () {
     return {
+      order: {
+        keys: ['#'],
+        sort: ['desc']
+      },
       colunas: [
         '#',
         'Nome',
@@ -38,13 +45,17 @@ export default {
   methods: {
     goToEdit: function (indice) {
       this.$router.push('/edit/' + indice)
+      this.$store.dispatch('getId', indice)
     },
-    editarRegistro: function (indice) {
-      this.$store.state.contatoList[indice].name = "Jessé";
-    },
-    editaModel: function (indice,e) {
-      let valor = e.target.value
-      this.$store.state.contatoList[indice].name = valor;
+    sortBy: function (coluna) {
+      console.log('deu certo')
+      this.order.keys = coluna
+      this.order.sort = this.order.sort == 'desc' ? 'asc' : 'desc'
+    }
+  },
+  computed: {
+    colunasFiltered () {
+      return _.orderBy(this.colunas, this.order.keys, this.order.sort)
     }
   }
 }
@@ -53,6 +64,10 @@ export default {
 <style>
   td {
     text-align: left
+  }
+  .filter {
+    width: 100%;
+    margin: 5px auto;
   }
 </style>
 
