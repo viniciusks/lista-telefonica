@@ -21,6 +21,9 @@ export default new Vuex.Store({
     },
     setId (state, indice) {
       state.id = indice
+    },
+    delContato (state, indice) {
+      state.contatoList[indice].remove()
     }
   },
   actions: {
@@ -32,6 +35,9 @@ export default new Vuex.Store({
     },
     getId (context, indice) {
       context.commit('setId', indice)
+    },
+    removeContato (context, indice) {
+      context.commit('delContato', indice)
     }
   }
 })

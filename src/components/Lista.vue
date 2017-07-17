@@ -8,6 +8,7 @@
               <a href='#' @click.prevent="sortBy(coluna)">{{ coluna | ucwords }}</a>
             </th>
             <th></th>
+            <th></th>
         </thead>
         <tbody>
             <tr v-for="(item,k) in dadosFiltered">
@@ -15,7 +16,8 @@
               <td>{{ item.name }}</td>
               <td>{{ item.email }}</td>
               <td>{{ item.numero }}</td>
-              <td><button class="btn btn-primary glyphicon glyphicon-edit" v-on:click="goToEdit(k)"></button></td>
+              <td><button class="btn btn-primary glyphicon glyphicon-edit" @click="goToEdit(k)"></button></td>
+              <td><button class="btn btn-danger glyphicon glyphicon-remove-sign" @click="remove(k)"></button></td>
             </tr>
         </tbody>
       </table>
@@ -47,6 +49,9 @@ export default {
     goToEdit: function (indice) {
       this.$router.push('/edit/' + indice)
       this.$store.dispatch('getId', indice)
+    },
+    remove: function (indice) {
+      this.$store.dispatch('removeContato', indice)
     },
     sortBy: function (coluna) {
       this.order.keys = coluna
