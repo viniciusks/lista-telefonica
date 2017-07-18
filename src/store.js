@@ -5,23 +5,25 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    contatoList: [],
-    id: 0
+    contatoList: []
   },
   mutations: {
     setContatoList (state, data) {
+      let indice = state.contatoList.length           
+      data.id = indice
       state.contatoList.push(data)
     },
     updateContatoList (state, data) {      
-      state.contatoList[data.id].name = data.item.name
-      state.contatoList[data.id].email = data.item.email
-      state.contatoList[data.id].numero = data.item.numero
+      state.contatoList[data.id].name = data.inf.name
+      state.contatoList[data.id].email = data.inf.email
+      state.contatoList[data.id].numero = data.inf.numero      
     },
     setId (state, indice) {
       state.id = indice
     },
     delContato (state, indice) {
-      state.contatoList[indice].delete()
+      let contatoList = state.contatoList
+      contatoList.splice(contatoList.indexOf(indice), 1)
     }
   },
   actions: {

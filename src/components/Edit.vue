@@ -3,11 +3,11 @@
     <h1>Edição</h1>
     <form @submit.prevent="save">
       <label>Nome: </label>
-      <input type="text" class="form-control edit" id="name" v-model="dados.item.name" placeholder="Digite o nome do contato...">
+      <input type="text" class="form-control edit" id="name" v-model="dados.inf.name" placeholder="Digite o nome do contato...">
       <label>Email: </label>
-      <input type="email" class="form-control edit" id="email" v-model="dados.item.email" placeholder="Digite o email do contato...">
+      <input type="email" class="form-control edit" id="email" v-model="dados.inf.email" placeholder="Digite o email do contato...">
       <label>Número: </label>
-      <input type="text" class="form-control edit" id="numero" v-model="dados.item.numero" placeholder="Digite o número do contato...">
+      <input type="text" class="form-control edit" id="numero" v-model="dados.inf.numero" placeholder="Digite o número do contato...">
       <input type="submit" class="btn btn-primary" value="Salvar">
     </form>
   </div>
@@ -19,7 +19,7 @@ export default {
   data: function () {
     return {
       dados: {
-          item: this.$store.state.contatoList[this.$store.state.id],
+          inf: this.$store.state.contatoList[this.$store.state.id],
           id: this.$store.state.id
       }
     }
