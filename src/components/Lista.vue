@@ -5,7 +5,7 @@
       <table class="table table-striped">
         <thead>
             <th v-for="coluna in colunas"> 
-              <a href='#' @click.prevent="sortBy(coluna.chave)">{{ coluna.title | ucwords }}</a>
+              <a href='#' class="linkColuna" @click.prevent="sortBy(coluna.chave)">{{ coluna.title | ucwords }}</a>
             </th>
             <th></th>
             <th></th>
@@ -68,24 +68,34 @@ export default {
       // console.log(indice)
     },
     remove: function (indice) {
-      this.$store.dispatch('removeContato', indice)
+      this.$store.dispatch('removeContato', indice).then(()=>{
+        this.$store.dispatch('syncIndices') 
+      })
     },
     sortBy: function (coluna) {
       this.order.keys = coluna
       this.order.sort = this.order.sort == 'desc' ? 'asc' : 'desc'
     }
   },
-  /*mounted: function() {    
+  mounted: function() {    
     // cria automaticamente caso esteja vazio para testes
     if(this.$store.state.contatoList.length == 0){
                 
-      this.$store.dispatch('newContato', {name: 'Vinícius',email: 'vinicius@ootz.com.br',numero: '42 9 9991-8821'})
-      this.$store.dispatch('newContato', {name: 'Klaus',email: 'klaus@ootz.com.br',numero: '41 9 9856-7546'})
-      this.$store.dispatch('newContato', {name: 'Sandra',email: 'sandra@ootz.com.br',numero: '42 9 9950-7220'})          
-      this.$store.dispatch('newContato', {name: 'Joel',email: 'joel@ootz.com.br',numero: '42 9 9980-9749'})
+      this.$store.dispatch('newContato', {name: 'Vinícius',email: 'vinicius@ootz.com.br',numero: '42 9 9991-8821'}).then(()=>{
+           this.$store.dispatch('syncIndices') 
+      })
+      this.$store.dispatch('newContato', {name: 'Klaus',email: 'klaus@ootz.com.br',numero: '41 9 9856-7546'}).then(()=>{
+           this.$store.dispatch('syncIndices') 
+      })
+      this.$store.dispatch('newContato', {name: 'Sandra',email: 'sandra@ootz.com.br',numero: '42 9 9950-7220'}).then(()=>{
+           this.$store.dispatch('syncIndices') 
+      })
+      this.$store.dispatch('newContato', {name: 'Joel',email: 'joel@ootz.com.br',numero: '42 9 9980-9749'}).then(()=>{
+           this.$store.dispatch('syncIndices') 
+      })
 
-    }
-  },*/ 
+    }        
+  },
   computed: {
     dadosFiltered () {
       let colecao = _.orderBy(this.dados.inf, this.order.keys, this.order.sort)
@@ -111,5 +121,17 @@ export default {
     width: 100%;
     margin: 5px auto;
   }
+  .linkColuna {
+    text-decoration: none;
+    font-weight: bold;
+    color: #35495e;    
+  }
+  .linkColuna:hover{
+    text-decoration: none;
+    font-weight: bold;
+    color: #41b883;
+  }
+  input:focus{
+  border: 1px solid #41b883 !important;
+  }
 </style>
-

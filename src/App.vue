@@ -2,7 +2,7 @@
   <div id="app">
     <div class="container">
       <div class="row">
-        <h1>Lista telefônica do Kremoso</h1>
+        <h1 class="title">Lista telefônica do Kremoso</h1>
       </div>
       <div class="row">
         <a href="#/" class="btn btn-default">Home</a>
@@ -36,5 +36,11 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.title {
+  color: #35495e;
+}
+.title:hover{
+  color: #41b883;
 }
 </style>

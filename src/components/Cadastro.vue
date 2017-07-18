@@ -28,6 +28,7 @@ export default {
   methods: {
     save: function () {
       this.$store.dispatch('newContato', this.contato).then(() => {
+        this.$store.dispatch('syncIndices') 
         this.$router.push('/lista')
       })
     }
@@ -36,9 +37,12 @@ export default {
 </script>
 
 <style>
-.cadastro {
-  margin: 5px auto;
-  width: 300px !important;
-}
+  .cadastro {
+    margin: 5px auto;
+    width: 300px !important;
+  }
+  input:focus{
+    border: 1px solid #41b883 !important;
+  }
 </style>
 

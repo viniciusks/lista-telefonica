@@ -8,10 +8,8 @@ export default new Vuex.Store({
     contatoList: []
   },
   mutations: {
-    setContatoList (state, data) {
-      let indice = state.contatoList.length           
-      data.id = indice
-      state.contatoList.push(data)
+    setContatoList (state, data) {      
+      state.contatoList.push(data)      
     },
     updateContatoList (state, data) {      
       state.contatoList[data.id].name = data.inf.name
@@ -23,7 +21,13 @@ export default new Vuex.Store({
     },
     delContato (state, indice) {
       let contatoList = state.contatoList
-      contatoList.splice(contatoList.indexOf(indice), 1)
+      contatoList.splice(indice, 1)
+      console.log(contatoList)
+    },
+    syncIndicesMut (state) {      
+      for(let i=0;i<state.contatoList.length;i++){        
+        state.contatoList[i].id = i;
+      }
     }
   },
   actions: {
@@ -38,6 +42,9 @@ export default new Vuex.Store({
     },
     removeContato (context, indice) {
       context.commit('delContato', indice)
+    },
+    syncIndices (context) {
+      context.commit('syncIndicesMut')
     }
   }
 })
