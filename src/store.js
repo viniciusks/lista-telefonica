@@ -29,6 +29,11 @@ export default new Vuex.Store({
         state.contatoList[i].id = i;
       }
     },
+    setFlags (state) {
+      for(let i=0;i<state.contatoList.length;i++){        
+        state.contatoList[i].flag = 2;
+      }
+    },
     changeFlag (state, data) {
       if (data == 2) {
         data = 1
@@ -55,6 +60,9 @@ export default new Vuex.Store({
     },
     syncIndices (context) {
       context.commit('syncIndicesMut')
+    },
+    initSetFlags (context) {
+      context.commit('setFlags')
     },
     getFlag (context, data) {
       context.commit('changeFlag', data)
