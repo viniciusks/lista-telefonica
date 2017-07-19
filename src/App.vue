@@ -8,6 +8,7 @@
         <a href="#/" class="btn btn-default">Home</a>
         <a href="#/cadastro" class="btn btn-default">Cadastro</a>
         <a href="#/lista" class="btn btn-default">Lista</a>
+        <a href="#/cadastro-venda" class="btn btn-default">Cadastro venda</a>
       </div>
       <div class="row">
         <router-view></router-view>
@@ -29,6 +30,9 @@ export default {
 </script>
 
 <style>
+body {
+  background-color: #d9534f;
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

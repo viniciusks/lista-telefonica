@@ -28,6 +28,7 @@ export default {
   methods: {
     save: function () {
       this.$store.dispatch('newContato', this.contato).then(() => {
+        // this.$store.dispatch('initSetFlags') 
         this.$store.dispatch('syncIndices') 
         this.$router.push('/lista')
       })

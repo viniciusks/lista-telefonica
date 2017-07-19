@@ -5,10 +5,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    contatoList: []
+    contatoList: [],
+    flag: 2
   },
   mutations: {
-    setContatoList (state, data) {      
+    setContatoList (state, data) {
       state.contatoList.push(data)      
     },
     updateContatoList (state, data) {      
@@ -22,11 +23,20 @@ export default new Vuex.Store({
     delContato (state, indice) {
       let contatoList = state.contatoList
       contatoList.splice(indice, 1)
-      console.log(contatoList)
     },
     syncIndicesMut (state) {      
       for(let i=0;i<state.contatoList.length;i++){        
         state.contatoList[i].id = i;
+      }
+    },
+    changeFlag (state, data) {
+      if (data == 2) {
+        data = 1
+        state.flag = data
+        console.log(data)
+      }else if (data == 1){
+        data = 2
+        state.flag = data
       }
     }
   },
@@ -45,6 +55,9 @@ export default new Vuex.Store({
     },
     syncIndices (context) {
       context.commit('syncIndicesMut')
+    },
+    getFlag (context, data) {
+      context.commit('changeFlag', data)
     }
   }
 })
