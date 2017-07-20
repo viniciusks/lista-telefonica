@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    clienteSelecionado: [],
     contatoList: [],
     flag: 2
   },
@@ -29,20 +30,8 @@ export default new Vuex.Store({
         state.contatoList[i].id = i;
       }
     },
-    setFlags (state) {
-      for(let i=0;i<state.contatoList.length;i++){        
-        state.contatoList[i].flag = 2;
-      }
-    },
-    changeFlag (state, data) {
-      if (state == 2) {
-        data = 1
-        state.flag = data
-        console.log(data)
-      }else if (data == 1) {
-        data = 2
-        state.flag = data
-      }
+    setInformacao (state, indice) {
+      state.clienteSelecionado = state.contatoList[indice]
     }
   },
   actions: {
@@ -61,11 +50,8 @@ export default new Vuex.Store({
     syncIndices (context) {
       context.commit('syncIndicesMut')
     },
-    initSetFlags (context) {
-      context.commit('setFlags')
-    },
-    getFlag (context, data) {
-      context.commit('changeFlag', data)
+    getInformacao (context, indice) {
+      context.commit('setInformacao', indice)
     }
   }
 })

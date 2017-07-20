@@ -12,9 +12,9 @@
           <li class="textTable">{{ servico.price }}</li>
         </div>
         <h3>Cliente selecionado</h3>
-        <div v-for="dado in dados.inf" v-if="dados.flag == 1">
-          <span class="textTable">{{ dado.name }}</span>
-          <button class="btn btn-danger glyphicon glyphicon-remove allignRight" v-if="dados.flag == 1" @click="mudaFlag(dados.flag)"></button>
+        <div v-for="cliente in clientes">
+          <span class="textTable">{{ cliente }}</span>
+          <button class="btn btn-danger glyphicon glyphicon-remove allignRight" v-if="dados.flag = 1"></button>
         </div>
       </div>
       <div class="col-md-8 divBack2">
@@ -52,12 +52,12 @@
                 <th></th>
               </thead>
               <tbody>
-                <tr v-for="dado in dadosFiltered">
-                  <td class="textTable">{{ dado.name }}</td>
-                  <td class="textTable">{{ dado.email }}</td>
-                  <td class="textTable">{{ dado.numero }}</td>
+                <tr v-for="item in dadosFiltered">
+                  <td class="textTable">{{ item.name }}</td>
+                  <td class="textTable">{{ item.email }}</td>
+                  <td class="textTable">{{ item.numero }}</td>
                   <td class="textTable">
-                    <button class="btn btn-primary glyphicon glyphicon-plus" v-if="dados.flag == 2" @click="mudaFlag(dados.inf)"></button>
+                    <button class="btn btn-primary glyphicon glyphicon-plus" v-if="dados.flag == 2" @click="pegaInformacao(item.id)"></button>
                   </td>
                 </tr>
               </tbody>
@@ -160,7 +160,8 @@ export default {
       dados: {
         inf: this.$store.state.contatoList,
         flag: this.$store.state.flag
-      }
+      },
+      clientes: this.$store.state.clienteSelecionado
     }
   },
   methods: {
@@ -180,9 +181,8 @@ export default {
         this.$router.push('/lista')
       })
     },
-    mudaFlag: function (data) {
-      console.log(data)
-      this.$store.dispatch('getFlag', data)
+    pegaInformacao: function (indice) {
+      this.$store.dispatch('getInformacao', indice)
     },
     sortBy: function (coluna) {
       this.order.keys = coluna
