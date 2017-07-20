@@ -2,19 +2,21 @@
   <div class="row">
     <div class="container">
       <div class="col-md-4 divBack1">
-        <h3>Serviços selecionados</h3>
-        <p v-if="verificaServicos()" class="textTable"><b>Nome:</b></p>
+        <h3 class="textLeft">Serviços selecionados</h3>
+        <p v-if="verificaServicos()" class="textLeft"><b>Nome:</b></p>
         <div v-for="servico in servicos" v-if="servico.flag == 1">
-          <li class="textTable">{{ servico.name }}</li>
+          <li class="textLeft">{{ servico.name }}</li>
         </div>
-        <p v-if="verificaServicos()" class="textTable"><b>Preço:</b></p>
+        <p v-if="verificaServicos()" class="textLeft"><b>Preço:</b></p>
         <div v-for="servico in servicos" v-if="servico.flag == 1">
-          <li class="textTable">{{ servico.price }}</li>
+          <li class="textLeft">{{ servico.price }}</li>
         </div>
-        <h3>Cliente selecionado</h3>
-        <div v-for="cliente in clientes">
-          <span class="textTable">{{ cliente }}</span>
-          <button class="btn btn-danger glyphicon glyphicon-remove allignRight" v-if="dados.flag = 1"></button>
+        <h3 class="textLeft">Cliente selecionado</h3>
+        <div>
+          <p class="textLeft">
+            {{ this.$store.state.clienteSelecionado.name }}
+            <button class="btn btn-danger glyphicon glyphicon-remove" v-if="controleBotoes == 1" @click="tirarInformacao(), changeControleBotoes(controleBotoes)"></button>
+          </p>
         </div>
       </div>
       <div class="col-md-8 divBack2">
@@ -23,13 +25,13 @@
             <h1>Serviços disponíveis</h1>
             <table class="table table-striped">
               <thead>
-                <th v-for="coluna in colunas" class="textTable">
+                <th v-for="coluna in colunas" class="textLeft">
                   <a>{{ coluna.title }}</a>
                 </th>
                 <th></th>
               </thead>
               <tbody>
-                <tr v-for="servico in servicosFiltered" class="textTable">
+                <tr v-for="servico in servicosFiltered" class="textLeft">
                   <td>{{ servico.name }}</td>
                   <td>{{ servico.price }}</td>
                   <td>
@@ -46,18 +48,18 @@
             <h1>Clientes disponíveis</h1>
             <table class="table table-striped">
               <thead>
-                <th v-for="coluna in colunas2" class="textTable">
+                <th v-for="coluna in colunas2" class="textLeft">
                   <a href="#" @click.prevent="sortBy(coluna.key)">{{ coluna.title }}</a>
                 </th>
                 <th></th>
               </thead>
               <tbody>
                 <tr v-for="item in dadosFiltered">
-                  <td class="textTable">{{ item.name }}</td>
-                  <td class="textTable">{{ item.email }}</td>
-                  <td class="textTable">{{ item.numero }}</td>
-                  <td class="textTable">
-                    <button class="btn btn-primary glyphicon glyphicon-plus" v-if="dados.flag == 2" @click="pegaInformacao(item.id)"></button>
+                  <td class="textLeft">{{ item.name }}</td>
+                  <td class="textLeft">{{ item.email }}</td>
+                  <td class="textLeft">{{ item.numero }}</td>
+                  <td class="textLeft">
+                    <button class="btn btn-primary glyphicon glyphicon-plus" v-if="controleBotoes == 2" @click="pegaInformacao(item.id), changeControleBotoes(controleBotoes)"></button>
                   </td>
                 </tr>
               </tbody>
@@ -95,6 +97,7 @@ export default {
         keys: 'name',
         sort: 'asc'
       },
+      controleBotoes: 2,
       permicaoCadastro: 2,
       contato: {
         name: '',
@@ -160,8 +163,7 @@ export default {
       dados: {
         inf: this.$store.state.contatoList,
         flag: this.$store.state.flag
-      },
-      clientes: this.$store.state.clienteSelecionado
+      }
     }
   },
   methods: {
@@ -176,17 +178,28 @@ export default {
     },
     save: function () {
       this.$store.dispatch('newContato', this.contato).then(() => {
-        this.$store.dispatch('initSetFlags') 
-        this.$store.dispatch('syncIndices') 
+        this.$store.dispatch('syncIndices')
         this.$router.push('/lista')
       })
     },
     pegaInformacao: function (indice) {
       this.$store.dispatch('getInformacao', indice)
     },
+    tirarInformacao: function () {
+      this.$store.dispatch('delInformacao')
+    },
     sortBy: function (coluna) {
       this.order.keys = coluna
       this.order.sort = this.order.sort == 'desc' ? 'asc' : 'desc'
+    },
+    changeControleBotoes: function (data) {
+      if (data == 2) {
+        data = 1
+        this.controleBotoes = data
+      }else if (data == 1) {
+        data = 2
+        this.controleBotoes = data
+      }
     }
   },
   mounted: function() {
@@ -194,23 +207,18 @@ export default {
     if(this.$store.state.contatoList.length == 0){
                 
       this.$store.dispatch('newContato', {name: 'Vinícius',email: 'vinicius@ootz.com.br',numero: '42 9 9991-8821'}).then(()=>{
-           this.$store.dispatch('initSetFlags')
            this.$store.dispatch('syncIndices') 
       })
       this.$store.dispatch('newContato', {name: 'Klaus',email: 'klaus@ootz.com.br',numero: '41 9 9856-7546'}).then(()=>{
-           this.$store.dispatch('initSetFlags') 
            this.$store.dispatch('syncIndices') 
       })
       this.$store.dispatch('newContato', {name: 'Sandra',email: 'sandra@ootz.com.br',numero: '42 9 9950-7220'}).then(()=>{
-           this.$store.dispatch('initSetFlags') 
            this.$store.dispatch('syncIndices') 
       })
       this.$store.dispatch('newContato', {name: 'Joel',email: 'joel@ootz.com.br',numero: '42 9 9980-9749'}).then(()=>{
-           this.$store.dispatch('initSetFlags') 
            this.$store.dispatch('syncIndices') 
       })
-
-    }        
+    }         
   },
   computed: {
     dadosFiltered () {
@@ -226,7 +234,7 @@ export default {
 </script>
 
 <style>
-.textTable {
+.textLeft {
   text-align: left;
   padding: 0px 8px;
 }
