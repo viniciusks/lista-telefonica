@@ -1,6 +1,7 @@
 <template>
   <div class="row">
     <div class="container">
+      <!-- Dados selecionados -->
       <div class="col-md-4 divBack1">
         <div class="row">
           <h3 class="textLeft">Serviços selecionados</h3>
@@ -14,7 +15,6 @@
           </div>
           <p class="textLeft"><b>Total:</b></p>
           <li class="textLeft">R$ {{ this.$store.state.total }}</li>
-          <!-- área onde o total será exibido -->
         </div>
         <div class="row">
           <h3 class="textLeft">Cliente selecionado</h3>
@@ -23,7 +23,11 @@
             <button class="btn btn-danger glyphicon glyphicon-remove" v-if="controleBotoes == 1" @click="tirarInformacao(), changeControleBotoes(controleBotoes)"></button>
           </p>
         </div>
+        <div class="row" style="border-top: 1px solid #000;">
+          <button class="btn btn-success btnAdd" @click="finalizarCompra()">Finalizar</button>
+        </div>
       </div>
+      <!-- Dados disponíveis -->
       <div class="col-md-8 divBack2">
         <div class="row">
           <div class="divServico">
@@ -121,23 +125,8 @@ export default {
       ],
       servicos: [
         {
-          name: 'Marketing',
-          price: 2200,
-          flag: 2
-        },
-        {
-          name: 'Serviço de TI',
-          price: 2000,
-          flag: 2
-        },
-        {
           name: 'Administração',
           price: 1200,
-          flag: 2
-        },
-        {
-          name: 'Design',
-          price: 2200,
           flag: 2
         },
         {
@@ -149,7 +138,22 @@ export default {
           name: 'Desenvolvimento em Vue.js com Vuex',
           price: 6000,
           flag: 2
-        }
+        },
+        {
+          name: 'Design',
+          price: 2200,
+          flag: 2
+        },
+        {
+          name: 'Serviço de TI',
+          price: 2000,
+          flag: 2
+        },
+        {
+          name: 'Marketing',
+          price: 2200,
+          flag: 2
+        }               
       ],
       colunas2: [
         {
@@ -211,9 +215,21 @@ export default {
     },
     delTotal: function (data) {
       this.$store.dispatch('delTotalAct', data)
+    },
+    finalizarCompra: function () {
+      let informacao = {
+        clienteSelecionado: this.$store.state.clienteSelecionado.name,
+        total: this.$store.state.total
+      }
+
+      console.log(informacao.clienteSelecionado)
+      console.log(informacao.total)
     }
   },
   mounted: function() {
+    if(this.$store.state.total != 0){
+      this.$store.state.total = 0
+    }
     // cria automaticamente caso esteja vazio para testes
     if(this.$store.state.contatoList.length == 0){
                 

@@ -27,6 +27,9 @@ export default new Vuex.Store({
         state.contatoList[i].id = i;
       }
     },
+    setId (state, indice) {
+      state.id = indice
+    },
     setInformacao (state, indice) {
       state.clienteSelecionado = state.contatoList[indice]
     },
