@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     clienteSelecionado: [],
-    contatoList: []
+    contatoList: [],
+    total: 0
   },
   mutations: {
     setContatoList (state, data) {
@@ -16,9 +17,6 @@ export default new Vuex.Store({
       state.contatoList[data.id].name = data.inf.name
       state.contatoList[data.id].email = data.inf.email
       state.contatoList[data.id].numero = data.inf.numero      
-    },
-    setId (state, indice) {
-      state.id = indice
     },
     delContato (state, indice) {
       let contatoList = state.contatoList
@@ -34,6 +32,12 @@ export default new Vuex.Store({
     },
     delInformacaoStore (state) {
       state.clienteSelecionado = ''
+    },
+    setTotal (state, data) {
+      state.total += data.price
+    },
+    delTotalMut (state, data) {
+      state.total -= data.price
     }
   },
   actions: {
@@ -57,6 +61,12 @@ export default new Vuex.Store({
     },
     delInformacao (context) {
       context.commit('delInformacaoStore')
+    },
+    getTotalAct (context, data) {
+      context.commit('setTotal', data)
+    },
+    delTotalAct (context, data) {
+      context.commit('delTotalMut', data)
     }
   }
 })

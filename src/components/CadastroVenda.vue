@@ -9,10 +9,11 @@
             <li class="textLeft">{{ servico.name }}</li>
           </div>
           <p v-if="verificaServicos()" class="textLeft"><b>Preço:</b></p>
-          <div v-for="servico in servicos" v-if="servico.flag == 1">
-            <li class="textLeft">{{ servico.price }}</li>
+          <div v-for="(servico, k) in servicos" v-if="servico.flag == 1">
+            <li class="textLeft">R$ {{ servico.price }}</li>
           </div>
-          <p v-if="verificaServicos()" class="textLeft"><b>Total:</b></p>
+          <p class="textLeft"><b>Total:</b></p>
+          <li class="textLeft">R$ {{ this.$store.state.total }}</li>
           <!-- área onde o total será exibido -->
         </div>
         <div class="row">
@@ -35,12 +36,12 @@
                 <th></th>
               </thead>
               <tbody>
-                <tr v-for="servico in servicosFiltered" class="textLeft">
+                <tr v-for="(servico,k) in servicosFiltered" class="textLeft">
                   <td>{{ servico.name }}</td>
-                  <td>{{ servico.price }}</td>
+                  <td>R$ {{ servico.price }}</td>
                   <td>
-                    <button class="btn btn-primary glyphicon glyphicon-plus" v-if="servico.flag == 2" v-on:click="servico.flag = 1"></button>
-                    <button class="btn btn-danger glyphicon glyphicon-remove" v-if="servico.flag == 1" v-on:click="servico.flag = 2"></button>
+                    <button class="btn btn-primary glyphicon glyphicon-plus" v-if="servico.flag == 2" @click="servico.flag = 1, getTotal(servico)"></button>
+                    <button class="btn btn-danger glyphicon glyphicon-remove" v-if="servico.flag == 1" @click="servico.flag = 2, delTotal(servico)"></button>
                   </td>
                 </tr>
               </tbody>
@@ -121,32 +122,32 @@ export default {
       servicos: [
         {
           name: 'Marketing',
-          price: 'R$ 2200,00',
+          price: 2200,
           flag: 2
         },
         {
           name: 'Serviço de TI',
-          price: 'R$ 2000,00',
+          price: 2000,
           flag: 2
         },
         {
           name: 'Administração',
-          price: 'R$ 1200,00',
+          price: 1200,
           flag: 2
         },
         {
           name: 'Design',
-          price: 'R$ 2200,00',
+          price: 2200,
           flag: 2
         },
         {
           name: 'Desenvolvimento em Vue.js',
-          price: 'R$ 4000,00',
+          price: 4000,
           flag: 2
         },
         {
           name: 'Desenvolvimento em Vue.js com Vuex',
-          price: 'R$ 6000,00',
+          price: 6000,
           flag: 2
         }
       ],
@@ -175,8 +176,8 @@ export default {
       let retorno = false
       for(let i=0;i<this.servicos.length;i++){
           if(this.servicos[i].flag == '1'){
-            retorno = true;
-          }
+            retorno = true
+        }
       }
       return retorno
     },
@@ -205,8 +206,11 @@ export default {
         this.controleBotoes = data
       }
     },
-    setTotal: function (data) {
-
+    getTotal: function (data) {
+      this.$store.dispatch('getTotalAct', data)
+    },
+    delTotal: function (data) {
+      this.$store.dispatch('delTotalAct', data)
     }
   },
   mounted: function() {
