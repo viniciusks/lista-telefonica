@@ -35,11 +35,11 @@ export default new Vuex.Store({
       }
     },
     changeFlag (state, data) {
-      if (data == 2) {
+      if (state == 2) {
         data = 1
         state.flag = data
         console.log(data)
-      }else if (data == 1){
+      }else if (data == 1) {
         data = 2
         state.flag = data
       }

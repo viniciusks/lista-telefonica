@@ -29,7 +29,7 @@
                 <th></th>
               </thead>
               <tbody>
-                <tr v-for="servico in servicos" class="textTable">
+                <tr v-for="servico in servicosFiltered" class="textTable">
                   <td>{{ servico.name }}</td>
                   <td>{{ servico.price }}</td>
                   <td>
@@ -47,17 +47,17 @@
             <table class="table table-striped">
               <thead>
                 <th v-for="coluna in colunas2" class="textTable">
-                  <a>{{ coluna.title }}</a>
+                  <a href="#" @click.prevent="sortBy(coluna.key)">{{ coluna.title }}</a>
                 </th>
                 <th></th>
               </thead>
               <tbody>
-                <tr v-for="dado in dados.inf">
+                <tr v-for="dado in dadosFiltered">
                   <td class="textTable">{{ dado.name }}</td>
                   <td class="textTable">{{ dado.email }}</td>
                   <td class="textTable">{{ dado.numero }}</td>
                   <td class="textTable">
-                    <button class="btn btn-primary glyphicon glyphicon-plus" v-if="dados.flag == 2" @click="mudaFlag(dados)"></button>
+                    <button class="btn btn-primary glyphicon glyphicon-plus" v-if="dados.flag == 2" @click="mudaFlag(dados.inf)"></button>
                   </td>
                 </tr>
               </tbody>
@@ -85,10 +85,16 @@
 </template>
 
 <script>
+import _ from 'lodash'
+
 export default {
   name: 'cadastroVenda',
   data: function () {
     return {
+      order: {
+        keys: 'name',
+        sort: 'asc'
+      },
       permicaoCadastro: 2,
       contato: {
         name: '',
@@ -139,7 +145,7 @@ export default {
       ],
       colunas2: [
         {
-          key: 'name1',
+          key: 'name',
           title: 'Nome'
         },
         {
@@ -177,6 +183,10 @@ export default {
     mudaFlag: function (data) {
       console.log(data)
       this.$store.dispatch('getFlag', data)
+    },
+    sortBy: function (coluna) {
+      this.order.keys = coluna
+      this.order.sort = this.order.sort == 'desc' ? 'asc' : 'desc'
     }
   },
   mounted: function() {
@@ -201,6 +211,16 @@ export default {
       })
 
     }        
+  },
+  computed: {
+    dadosFiltered () {
+      let colecao = _.orderBy(this.dados.inf, this.order.keys, this.order.sort)
+      return colecao
+    },
+    servicosFiltered () {
+      let colecao = _.orderBy(this.servicos, this.order.key, this.order.sort)
+      return colecao
+    }
   }
 }
 </script>
