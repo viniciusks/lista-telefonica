@@ -1,6 +1,7 @@
 <template>
   <div class="row">
     <div class="container">
+      <h1>Cadastro de vendas</h1>
       <!-- Dados selecionados -->
       <div class="col-md-4 divBack1">
         <div class="row">
@@ -44,8 +45,8 @@
                   <td>{{ servico.name }}</td>
                   <td>R$ {{ servico.price }}</td>
                   <td>
-                    <button class="btn btn-primary glyphicon glyphicon-plus" v-if="servico.flag == 2" @click="servico.flag = 1, getTotal(servico)"></button>
-                    <button class="btn btn-danger glyphicon glyphicon-remove" v-if="servico.flag == 1" @click="servico.flag = 2, delTotal(servico)"></button>
+                    <button class="btn btn-primary glyphicon glyphicon-plus" v-if="servico.flag == 2" @click="servico.flag = 1, getTotal(servico), count++"></button>
+                    <button class="btn btn-danger glyphicon glyphicon-remove" v-if="servico.flag == 1" @click="servico.flag = 2, delTotal(servico), count--"></button>
                   </td>
                 </tr>
               </tbody>
@@ -107,6 +108,7 @@ export default {
         sort: 'asc'
       },
       controleBotoes: 2,
+      count: 0,
       permicaoCadastro: 2,
       contato: {
         name: '',
@@ -219,16 +221,20 @@ export default {
     finalizarCompra: function () {
       let informacao = {
         clienteSelecionado: this.$store.state.clienteSelecionado.name,
+        qtdServicos: this.count,
         total: this.$store.state.total
       }
-
-      console.log(informacao.clienteSelecionado)
-      console.log(informacao.total)
+      this.$store.dispatch('getFinalizar', informacao).then(() => {
+        this.$router.push('/lista-venda')
+      })
     }
   },
   mounted: function() {
     if(this.$store.state.total != 0){
       this.$store.state.total = 0
+    }
+    if(this.$store.state.clienteSelecionado != ''){
+      this.$store.state.clienteSelecionado = ''
     }
     // cria automaticamente caso esteja vazio para testes
     if(this.$store.state.contatoList.length == 0){

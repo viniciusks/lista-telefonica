@@ -65,8 +65,7 @@ export default {
   methods: {
     goToEdit: function (indice) {
       this.$store.dispatch('getId', indice).then(() => {
-        this.$router.push('/edit/' + indice) 
-        console.log(this.dados.inf)    
+        this.$router.push('/edit/' + indice)    
       })
     },
     remove: function (indice) {

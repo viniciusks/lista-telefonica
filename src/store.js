@@ -7,6 +7,9 @@ export default new Vuex.Store({
   state: {
     clienteSelecionado: [],
     contatoList: [],
+    compraFinalizadoClientes: [],
+    compraFinalizadoServicos: [],
+    compraFinalizadoTotal: [],
     total: 0
   },
   mutations: {
@@ -41,6 +44,11 @@ export default new Vuex.Store({
     },
     delTotalMut (state, data) {
       state.total -= data.price
+    },
+    setFinalizar (state, data) {
+      state.compraFinalizadoClientes.push(data.clienteSelecionado)
+      state.compraFinalizadoServicos.push(data.qtdServicos)
+      state.compraFinalizadoTotal.push(data.total)
     }
   },
   actions: {
@@ -70,6 +78,9 @@ export default new Vuex.Store({
     },
     delTotalAct (context, data) {
       context.commit('delTotalMut', data)
+    },
+    getFinalizar (context, data) {
+      context.commit('setFinalizar', data)
     }
   }
 })

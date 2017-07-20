@@ -5,6 +5,7 @@ import Cadastro from '../components/Cadastro'
 import Lista from '../components/Lista'
 import Edit from '../components/Edit'
 import CadastroVenda from '@/components/CadastroVenda'
+import ListaVenda from '@/components/ListaVenda'
 
 Vue.use(Router)
 
@@ -30,6 +31,10 @@ export default new Router({
     {
       path: '/cadastro-venda',
       component: CadastroVenda
+    },
+    {
+      path: '/lista-venda',
+      component: ListaVenda
     }
   ]
 })
