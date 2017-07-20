@@ -2,17 +2,21 @@
   <div class="row">
     <div class="container">
       <div class="col-md-4 divBack1">
-        <h3 class="textLeft">Serviços selecionados</h3>
-        <p v-if="verificaServicos()" class="textLeft"><b>Nome:</b></p>
-        <div v-for="servico in servicos" v-if="servico.flag == 1">
-          <li class="textLeft">{{ servico.name }}</li>
+        <div class="row">
+          <h3 class="textLeft">Serviços selecionados</h3>
+          <p v-if="verificaServicos()" class="textLeft"><b>Nome:</b></p>
+          <div v-for="servico in servicos" v-if="servico.flag == 1">
+            <li class="textLeft">{{ servico.name }}</li>
+          </div>
+          <p v-if="verificaServicos()" class="textLeft"><b>Preço:</b></p>
+          <div v-for="servico in servicos" v-if="servico.flag == 1">
+            <li class="textLeft">{{ servico.price }}</li>
+          </div>
+          <p v-if="verificaServicos()" class="textLeft"><b>Total:</b></p>
+          <!-- área onde o total será exibido -->
         </div>
-        <p v-if="verificaServicos()" class="textLeft"><b>Preço:</b></p>
-        <div v-for="servico in servicos" v-if="servico.flag == 1">
-          <li class="textLeft">{{ servico.price }}</li>
-        </div>
-        <h3 class="textLeft">Cliente selecionado</h3>
-        <div>
+        <div class="row">
+          <h3 class="textLeft">Cliente selecionado</h3>
           <p class="textLeft">
             {{ this.$store.state.clienteSelecionado.name }}
             <button class="btn btn-danger glyphicon glyphicon-remove" v-if="controleBotoes == 1" @click="tirarInformacao(), changeControleBotoes(controleBotoes)"></button>
@@ -200,6 +204,9 @@ export default {
         data = 2
         this.controleBotoes = data
       }
+    },
+    setTotal: function (data) {
+
     }
   },
   mounted: function() {
