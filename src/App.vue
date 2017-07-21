@@ -8,7 +8,7 @@
         <a href="#/" class="btn btn-default">Home</a>
         <a href="#/cadastro" class="btn btn-default">Cadastro</a>
         <a href="#/lista" class="btn btn-default">Lista</a>
-        <a href="#/cadastro-venda" class="btn btn-default">Cadastro venda</a>
+        <a href="#/cadastro-venda" class="btn btn-default">Cadastro de vendas</a>
         <a href="#/lista-venda" class="btn btn-default">Lista de vendas</a>
       </div>
       <div class="row">

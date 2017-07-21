@@ -11,13 +11,19 @@
         <tbody>
           <tr>
             <td>
-              <tr v-for="item in cliente" class="textLeft">{{ item }}</tr>
+              <tr v-for="item in cliente" class="textLeft"><p>{{ item }}</p></tr>
             </td>
             <td>
-              <tr v-for="item in qtdServicos" class="textLeft">{{ item }}</tr>
+              <tr v-for="item in qtdServicos" class="textLeft"><p>{{ item }}</p></tr>
             </td>
             <td>
-              <tr v-for="item in total" class="textLeft">{{ item }}</tr>
+              <tr v-for="item in total" class="textLeft"><p>{{ item }}</p></tr>
+            </td>
+            <td>
+              <tr v-for="item in qtdServicos">
+                <input type="text" class="btn btn-primary btnListaVendas" value="Editar">
+                <input type="text" class="btn btn-danger btnListaVendas" value="Excluir">
+              </tr>
             </td>
           </tr>
         </tbody>
@@ -70,5 +76,10 @@ export default {
 .textLeft {
   text-align: left;
   padding: 0px 8px;
+}
+.btnListaVendas {
+  margin: 0px 0px 2px 2px;
+  height: 25px;
+  width: 70px;
 }
 </style>

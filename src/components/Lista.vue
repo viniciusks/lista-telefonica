@@ -65,7 +65,7 @@ export default {
   methods: {
     goToEdit: function (indice) {
       this.$store.dispatch('getId', indice).then(() => {
-        this.$router.push('/edit/' + indice)    
+        this.$router.push('/edit/' + indice)
       })
     },
     remove: function (indice) {

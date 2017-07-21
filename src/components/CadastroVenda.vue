@@ -12,10 +12,10 @@
           </div>
           <p v-if="verificaServicos()" class="textLeft"><b>Preço:</b></p>
           <div v-for="(servico, k) in servicos" v-if="servico.flag == 1">
-            <li class="textLeft">R$ {{ servico.price }}</li>
+            <li class="textLeft">R$ {{ servico.price }},00</li>
           </div>
           <p class="textLeft"><b>Total:</b></p>
-          <li class="textLeft">R$ {{ this.$store.state.total }}</li>
+          <li class="textLeft">R$ {{ this.$store.state.total }},00</li>
         </div>
         <div class="row">
           <h3 class="textLeft">Cliente selecionado</h3>
@@ -41,12 +41,12 @@
                 <th></th>
               </thead>
               <tbody>
-                <tr v-for="(servico,k) in servicosFiltered" class="textLeft">
+                <tr v-for="(servico,k) in servicos" class="textLeft">
                   <td>{{ servico.name }}</td>
-                  <td>R$ {{ servico.price }}</td>
+                  <td>R$ {{ servico.price }},00</td>
                   <td>
-                    <button class="btn btn-primary glyphicon glyphicon-plus" v-if="servico.flag == 2" @click="servico.flag = 1, getTotal(servico), count++"></button>
-                    <button class="btn btn-danger glyphicon glyphicon-remove" v-if="servico.flag == 1" @click="servico.flag = 2, delTotal(servico), count--"></button>
+                    <button class="btn btn-primary glyphicon glyphicon-plus" v-if="servico.flag == 2" @click="servico.flag = 1, getTotal(servico), pegarServico(servico), count++"></button>
+                    <button class="btn btn-danger glyphicon glyphicon-remove" v-if="servico.flag == 1" @click="servico.flag = 2, delTotal(servico), pegarServico(servico), count--"></button>
                   </td>
                 </tr>
               </tbody>
@@ -125,33 +125,61 @@ export default {
           title: 'Preço'
         }
       ],
+      /*venda: {
+        servicos: [
+          {
+            nome: '',
+            valor: ''
+          },
+          {
+            nome: '',
+            valor: ''
+          },
+          {
+            nome: '',
+            valor: ''
+          }
+        ],
+        cliente: {
+          nome: '',
+          id: ''
+        },
+        valor_total: '',
+        frete: ''
+      },*/
       servicos: [
         {
+          id: 0,
           name: 'Administração',
           price: 1200,
           flag: 2
         },
         {
+          id: 1,
           name: 'Desenvolvimento em Vue.js',
           price: 4000,
           flag: 2
         },
         {
+          id: 2,
           name: 'Desenvolvimento em Vue.js com Vuex',
           price: 6000,
           flag: 2
         },
         {
+          id: 3,
           name: 'Design',
           price: 2200,
           flag: 2
         },
         {
+          id: 4,
           name: 'Serviço de TI',
           price: 2000,
           flag: 2
         },
         {
+          id:5,
           name: 'Marketing',
           price: 2200,
           flag: 2
@@ -218,13 +246,21 @@ export default {
     delTotal: function (data) {
       this.$store.dispatch('delTotalAct', data)
     },
+    pegarServico: function (data) {
+      if (data.flag == 1) {
+        this.$store.dispatch('getServico', data)
+      } else if (data.flag == 2) {
+        this.$store.dispatch('delServico', data)
+      }
+    },
     finalizarCompra: function () {
-      let informacao = {
-        clienteSelecionado: this.$store.state.clienteSelecionado.name,
+      let venda = {
+        clienteSelecionado: this.$store.state.clienteSelecionado,
+        servicos: this.$store.state.servicos,
         qtdServicos: this.count,
         total: this.$store.state.total
       }
-      this.$store.dispatch('getFinalizar', informacao).then(() => {
+      this.$store.dispatch('getFinalizar', venda).then(() => {
         this.$router.push('/lista-venda')
       })
     }
@@ -251,15 +287,12 @@ export default {
       this.$store.dispatch('newContato', {name: 'Joel',email: 'joel@ootz.com.br',numero: '42 9 9980-9749'}).then(()=>{
            this.$store.dispatch('syncIndices') 
       })
+
     }         
   },
   computed: {
     dadosFiltered () {
       let colecao = _.orderBy(this.dados.inf, this.order.keys, this.order.sort)
-      return colecao
-    },
-    servicosFiltered () {
-      let colecao = _.orderBy(this.servicos, this.order.key, this.order.sort)
       return colecao
     }
   }

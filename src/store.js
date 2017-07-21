@@ -7,9 +7,8 @@ export default new Vuex.Store({
   state: {
     clienteSelecionado: [],
     contatoList: [],
-    compraFinalizadoClientes: [],
-    compraFinalizadoServicos: [],
-    compraFinalizadoTotal: [],
+    servicos: [],
+    vendas: [],
     total: 0
   },
   mutations: {
@@ -46,9 +45,14 @@ export default new Vuex.Store({
       state.total -= data.price
     },
     setFinalizar (state, data) {
-      state.compraFinalizadoClientes.push(data.clienteSelecionado)
-      state.compraFinalizadoServicos.push(data.qtdServicos)
-      state.compraFinalizadoTotal.push(data.total)
+      state.vendas.push(data)
+    },
+    setServico (state, data) {
+      state.servicos.push(data)
+    },
+    delServicoMut (state, data) {
+      let servicos = state.servicos
+      servicos.splice(data, 1)
     }
   },
   actions: {
@@ -81,6 +85,12 @@ export default new Vuex.Store({
     },
     getFinalizar (context, data) {
       context.commit('setFinalizar', data)
+    },
+    getServico (context, data) {
+      context.commit('setServico', data)
+    },
+    delServico (context, data) {
+      context.commit('delServicoMut', data)
     }
   }
 })
