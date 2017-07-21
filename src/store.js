@@ -9,6 +9,7 @@ export default new Vuex.Store({
     contatoList: [],
     servicos: [],
     vendas: [],
+    indiceServicos: [],
     total: 0
   },
   mutations: {
@@ -46,9 +47,11 @@ export default new Vuex.Store({
     },
     setFinalizar (state, data) {
       state.vendas.push(data)
+      // console.log(state.vendas) 
     },
     setServico (state, data) {
       state.servicos.push(data)
+      // console.log(state.servicos)
     },
     delServicoMut (state, data) {
       let servicos = state.servicos

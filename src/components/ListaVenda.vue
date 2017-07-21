@@ -5,26 +5,19 @@
       <table class="table table-striped">
         <thead>
           <th v-for="coluna in colunas" class="textLeft">
-            <a>{{ coluna.title }}</a>
+            <p>{{ coluna.title }}</p>
           </th>
         </thead>
         <tbody>
-          <tr>
+          <tr v-for="(item,k) in venda">
+            <td class="textLeft1" @click="teste(item.clienteSelecionado)">{{ item.clienteSelecionado.name }}</td>
             <td>
-              <tr v-for="item in cliente" class="textLeft"><p>{{ item }}</p></tr>
+              <li class="textLeft1">{{ item.servicos[0].name }} / R$ {{ item.servicos[0].price }},00</li>
             </td>
-            <td>
-              <tr v-for="item in qtdServicos" class="textLeft"><p>{{ item }}</p></tr>
-            </td>
-            <td>
-              <tr v-for="item in total" class="textLeft"><p>{{ item }}</p></tr>
-            </td>
-            <td>
-              <tr v-for="item in qtdServicos">
-                <input type="text" class="btn btn-primary btnListaVendas" value="Editar">
-                <input type="text" class="btn btn-danger btnListaVendas" value="Excluir">
-              </tr>
-            </td>
+            <td class="textLeft1">{{ item.qtdServicos }}</td>
+            <td class="textLeft1">{{ item.total }}</td>
+            <td><button type="text" class="btn btn-primary btnListaVendas glyphicon glyphicon-edit"></button></td>
+            <td><button type="text" class="btn btn-danger btnListaVendas glyphicon glyphicon-remove"></button></td>
           </tr>
         </tbody>
       </table>
@@ -43,6 +36,10 @@ export default {
           title: 'Cliente'
         },
         {
+          key: 'servicos',
+          title: 'Serviços / Preço'
+        },
+        {
           key: 'qtdServicos',
           title: 'Qtd de serviços'
         },
@@ -53,15 +50,14 @@ export default {
       ]
     }
   },
+  methods: {
+    teste: function (value) {
+      console.log(value)
+    }
+  },
   computed: {
-    cliente () {
-      return this.$store.state.compraFinalizadoClientes
-    },
-    qtdServicos () {
-      return this.$store.state.compraFinalizadoServicos
-    },
-    total () {
-      return this.$store.state.compraFinalizadoTotal
+    venda () {
+      return this.$store.state.vendas
     }
   }
 }
@@ -77,9 +73,13 @@ export default {
   text-align: left;
   padding: 0px 8px;
 }
+.textLeft1 {
+  text-align: left;
+  padding: -1px 0px 0px 10px !important;
+}
 .btnListaVendas {
   margin: 0px 0px 2px 2px;
-  height: 25px;
+  height: 35px;
   width: 70px;
 }
 </style>

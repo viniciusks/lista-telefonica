@@ -272,6 +272,9 @@ export default {
     if(this.$store.state.clienteSelecionado != ''){
       this.$store.state.clienteSelecionado = ''
     }
+    if (this.$store.state.servicos.length > 0) {
+      this.$store.state.servicos = []
+    }
     // cria automaticamente caso esteja vazio para testes
     if(this.$store.state.contatoList.length == 0){
                 
