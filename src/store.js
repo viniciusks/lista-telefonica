@@ -47,6 +47,8 @@ export default new Vuex.Store({
     },
     setFinalizar (state, data) {
       state.vendas.push(data)
+      // state.indiceServicos.push(state.servicos.length)
+      // console.log(state.indiceServicos)
       // console.log(state.vendas) 
     },
     setServico (state, data) {
