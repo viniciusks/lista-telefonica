@@ -6,6 +6,7 @@ import Lista from '../components/Lista'
 import Edit from '../components/Edit'
 import CadastroVenda from '@/components/CadastroVenda'
 import ListaVenda from '@/components/ListaVenda'
+import EditVenda from '@/components/EditVenda'
 
 Vue.use(Router)
 
@@ -35,6 +36,10 @@ export default new Router({
     {
       path: '/lista-venda',
       component: ListaVenda
+    },
+    {
+      path: '/edit-compra/:id',
+      component: EditVenda
     }
   ]
 })

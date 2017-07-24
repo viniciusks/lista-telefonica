@@ -9,6 +9,7 @@ export default new Vuex.Store({
     contatoList: [],
     servicos: [],
     vendas: [],
+    indiceVenda: [],
     indiceServicos: [],
     total: 0
   },
@@ -49,7 +50,12 @@ export default new Vuex.Store({
       state.vendas.push(data)
       // state.indiceServicos.push(state.servicos.length)
       // console.log(state.indiceServicos)
-      // console.log(state.vendas) 
+      if (state.vendas.length >= 1) {
+        let indiceVenda = state.vendas.length - 1
+        state.indiceVenda.push(indiceVenda)
+        let indiceServicos = state.servicos.length - 1
+        state.indiceServicos.push(indiceServicos)
+      }
     },
     setServico (state, data) {
       state.servicos.push(data)

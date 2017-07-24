@@ -28,6 +28,7 @@ export default {
     save: function () {
       this.$store.dispatch('editContato', this.dados).then(() => {
         this.$router.push('/lista')
+        console.log(this.dados.id)
       })
     }
   }

@@ -279,16 +279,16 @@ export default {
     if(this.$store.state.contatoList.length == 0){
                 
       this.$store.dispatch('newContato', {name: 'Vinícius',email: 'vinicius@ootz.com.br',numero: '42 9 9991-8821'}).then(()=>{
-           this.$store.dispatch('syncIndices') 
+        this.$store.dispatch('syncIndices') 
       })
       this.$store.dispatch('newContato', {name: 'Klaus',email: 'klaus@ootz.com.br',numero: '41 9 9856-7546'}).then(()=>{
-           this.$store.dispatch('syncIndices') 
+        this.$store.dispatch('syncIndices') 
       })
       this.$store.dispatch('newContato', {name: 'Sandra',email: 'sandra@ootz.com.br',numero: '42 9 9950-7220'}).then(()=>{
-           this.$store.dispatch('syncIndices') 
+        this.$store.dispatch('syncIndices') 
       })
       this.$store.dispatch('newContato', {name: 'Joel',email: 'joel@ootz.com.br',numero: '42 9 9980-9749'}).then(()=>{
-           this.$store.dispatch('syncIndices') 
+        this.$store.dispatch('syncIndices') 
       })
 
     }         

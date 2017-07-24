@@ -11,12 +11,9 @@
         <tbody>
           <tr v-for="(item,k) in venda">
             <td class="textLeft1" @click="teste(item.clienteSelecionado)">{{ item.clienteSelecionado.name }}</td>
-            <td>
-              <li class="textLeft1">{{ item.servicos[0].name }} / R$ {{ item.servicos[0].price }},00</li>
-            </td>
             <td class="textLeft1">{{ item.qtdServicos }}</td>
             <td class="textLeft1">{{ item.total }}</td>
-            <td><button type="text" class="btn btn-primary btnListaVendas glyphicon glyphicon-edit"></button></td>
+            <td><button type="text" class="btn btn-primary btnListaVendas glyphicon glyphicon-edit" @click="goToEditCompra(k)"></button></td>
             <td><button type="text" class="btn btn-danger btnListaVendas glyphicon glyphicon-remove"></button></td>
           </tr>
         </tbody>
@@ -36,10 +33,6 @@ export default {
           title: 'Cliente'
         },
         {
-          key: 'servicos',
-          title: 'Serviços / Preço'
-        },
-        {
           key: 'qtdServicos',
           title: 'Qtd de serviços'
         },
@@ -53,11 +46,19 @@ export default {
   methods: {
     teste: function (value) {
       console.log(value)
+    },
+    goToEditCompra: function (indice) {
+      this.$store.dispatch('getId', indice).then(() => {
+        this.$router.push('/edit-compra/' + indice)
+      })
     }
   },
   computed: {
     venda () {
       return this.$store.state.vendas
+    },
+    indiceVenda () {
+      return this.$store.state.indiceVenda
     }
   }
 }
@@ -75,7 +76,7 @@ export default {
 }
 .textLeft1 {
   text-align: left;
-  padding: -1px 0px 0px 10px !important;
+  padding: 15px 0px 0px 10px !important;
 }
 .btnListaVendas {
   margin: 0px 0px 2px 2px;
