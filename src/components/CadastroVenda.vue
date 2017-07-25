@@ -303,24 +303,8 @@ export default {
 </script>
 
 <style>
-.textLeft {
-  text-align: left;
-  padding: 0px 8px;
-}
 .allignRight {
   text-align: right;
-}
-.divBack1 {
-  background-color: #fff;
-  border-radius: 4px;
-  margin: 5px;
-  width: 300px;
-}
-.divBack2 {
-  background-color: #fff;
-  border-radius: 4px;
-  margin: 5px;
-  width: 800px;
 }
 .btnAdd {
   margin: 5px;

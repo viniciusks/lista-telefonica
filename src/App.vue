@@ -48,4 +48,20 @@ body {
 .title:hover{
   color: #41b883;
 }
+.textLeft {
+  text-align: left;
+  padding: 0px 8px;
+}
+.divBack1 {
+  background-color: #fff;
+  border-radius: 4px;
+  margin: 5px;
+  width: 300px;
+}
+.divBack2 {
+  background-color: #fff;
+  border-radius: 4px;
+  margin: 5px;
+  width: 800px;
+}
 </style>

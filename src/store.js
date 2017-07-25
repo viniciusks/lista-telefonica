@@ -9,8 +9,6 @@ export default new Vuex.Store({
     contatoList: [],
     servicos: [],
     vendas: [],
-    indiceVenda: [],
-    indiceServicos: [],
     total: 0
   },
   mutations: {
@@ -50,12 +48,6 @@ export default new Vuex.Store({
       state.vendas.push(data)
       // state.indiceServicos.push(state.servicos.length)
       // console.log(state.indiceServicos)
-      if (state.vendas.length >= 1) {
-        let indiceVenda = state.vendas.length - 1
-        state.indiceVenda.push(indiceVenda)
-        let indiceServicos = state.servicos.length - 1
-        state.indiceServicos.push(indiceServicos)
-      }
     },
     setServico (state, data) {
       state.servicos.push(data)
@@ -64,6 +56,15 @@ export default new Vuex.Store({
     delServicoMut (state, data) {
       let servicos = state.servicos
       servicos.splice(data, 1)
+    },
+    excluirServicoMut (state, data) {
+      let indice = data.servico.id
+      let dado = state.vendas[data.id].servicos[indice]
+      console.log(dado)
+      // dado.splice(indice, 1)
+      console.log('ID da venda: ' + data.id) 
+      console.log('ID do serviço: ' + indice) 
+      console.log('Informação do dado: ' + dado.flag)
     }
   },
   actions: {
@@ -102,6 +103,9 @@ export default new Vuex.Store({
     },
     delServico (context, data) {
       context.commit('delServicoMut', data)
+    },
+    excluirServico (context, data) {
+      context.commit('excluirServicoMut', data)
     }
   }
 })
