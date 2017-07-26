@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     clienteSelecionado: [],
     contatoList: [],
+    servicosList: [],
     servicos: [],
     vendas: [],
     total: 0
@@ -14,6 +15,9 @@ export default new Vuex.Store({
   mutations: {
     setContatoList (state, data) {
       state.contatoList.push(data)      
+    },
+    setservicoList (state, data) {
+      state.servicosList.push(data)
     },
     updateContatoList (state, data) {      
       state.contatoList[data.id].name = data.inf.name
@@ -49,6 +53,9 @@ export default new Vuex.Store({
     delTotalMut (state, data) {
       state.total -= data.price
     },
+    getTotalVendaMut (state, data) {
+      state.vendas[data.id].total += data.servico.price
+    },
     delTotalVendaMut (state, data) {
       state.vendas[data.id].total -= data.servico.price
     },
@@ -62,17 +69,29 @@ export default new Vuex.Store({
       let servicos = state.servicos
       servicos.splice(data, 1)
     },
+    incluirServicoMut (state, data) {
+      let indice = data.servico.indice
+      let dado = state.vendas[data.id].servicos
+      state.vendas[data.id].qtdServicos += 1
+      dado.push(data.servico)
+      console.log(dado)
+    },
     excluirServicoMut (state, data) {
       let indice = data.servico.indice
       let dado = state.vendas[data.id].servicos
       state.vendas[data.id].qtdServicos -= 1
       dado.splice(indice, 1)
-      console.log(state.vendas)
+    },
+    excluirFromVenda (state, indice) {
+      state.vendas.splice(indice, 1)
     }
   },
   actions: {
     newContato (context, data) {      
       context.commit('setContatoList', data)
+    },
+    newServico (context, data) {
+      context.commit('setservicoList', data)
     },
     editContato (context, data) {      
       context.commit('updateContatoList', data)
@@ -101,6 +120,9 @@ export default new Vuex.Store({
     delTotalAct (context, data) {
       context.commit('delTotalMut', data)
     },
+    getTotalVendaAct (context, data) {
+      context.commit('getTotalVendaMut', data)
+    },
     delTotalVendaAct (context, data) {
       context.commit('delTotalVendaMut', data)
     },
@@ -113,9 +135,14 @@ export default new Vuex.Store({
     delServico (context, data) {
       context.commit('delServicoMut', data)
     },
+    incluirServicoAct (context, data) {
+      context.commit('incluirServicoMut', data)
+    },
     excluirServico (context, data) {
-      //console.log(data.servico)
       context.commit('excluirServicoMut', data)
+    },
+    removeFromVenda (context, indice) {
+      context.commit('excluirFromVenda', indice)
     }
   }
 })

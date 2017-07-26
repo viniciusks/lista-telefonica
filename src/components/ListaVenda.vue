@@ -14,7 +14,7 @@
             <td class="textLeft1">{{ item.qtdServicos }}</td>
             <td class="textLeft1">{{ item.total }}</td>
             <td><button type="text" class="btn btn-primary btnListaVendas glyphicon glyphicon-edit" @click="goToEditCompra(k)"></button></td>
-            <td><button type="text" class="btn btn-danger btnListaVendas glyphicon glyphicon-remove"></button></td>
+            <td><button type="text" class="btn btn-danger btnListaVendas glyphicon glyphicon-remove" @click="removeFromList(k)"></button></td>
           </tr>
         </tbody>
       </table>
@@ -43,6 +43,13 @@ export default {
       ]
     }
   },
+  mounted: function () {
+    for (let i=0;i<this.$store.state.vendas.length;i++) {
+      if (this.$store.state.vendas[i].total == 0) {
+        this.$store.dispatch('removeFromVenda', i)
+      }
+    }
+  },
   methods: {
     teste: function (value) {
       console.log(value)
@@ -51,6 +58,9 @@ export default {
       this.$store.dispatch('getId', indice).then(() => {
         this.$router.push('/edit-compra/' + indice)
       })
+    },
+    removeFromList: function (indice) {
+      this.$store.dispatch('removeFromVenda', indice)
     }
   },
   computed: {

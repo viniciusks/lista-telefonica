@@ -24,9 +24,9 @@ export default {
   style: [
     require('bootstrap/dist/css/bootstrap.min.css')
   ],
-  script: [
+  /*script: [
     require('jquery/dist/jquery.min.js')
-  ]
+  ]*/
 }
 </script>
 
