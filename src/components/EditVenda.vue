@@ -138,16 +138,21 @@ export default {
     excluirServico: function (servico) {
       let informacao = {
         servico,
-        id: this.$store.state.id
+        id: this.$store.state.id,
+        qtdServicos: this.$store.state.vendas[this.$store.state.id].qtdServicos
       }
-      console.log(informacao.servico)
+      this.$store.dispatch('syncIndiceServico', informacao)
       this.$store.dispatch('excluirServico', informacao)
     },
     getTotal: function (data) {
-    console.log('total')
+      console.log('total')
     },
-    delTotal: function (data) {
-      console.log('del total')
+    delTotal: function (servico) {
+      let informacao = {
+        servico,
+        id: this.$store.state.id
+      }
+      this.$store.dispatch('delTotalVendaAct', informacao)
     },
     pegarServico: function (data) {
       console.log('pegou o serviço')
