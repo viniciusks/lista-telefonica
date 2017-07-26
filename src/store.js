@@ -70,7 +70,6 @@ export default new Vuex.Store({
       servicos.splice(data, 1)
     },
     incluirServicoMut (state, data) {
-      let indice = data.servico.indice
       let dado = state.vendas[data.id].servicos
       state.vendas[data.id].qtdServicos += 1
       dado.push(data.servico)
@@ -84,6 +83,12 @@ export default new Vuex.Store({
     },
     excluirFromVenda (state, indice) {
       state.vendas.splice(indice, 1)
+    },
+    setFlag (state, data) {
+      let indice = data.servico.indice
+      if (state.vendas[data.id].servicos[indice].flag == 2) {
+        state.vendas[data.id].servicos[indice].flag = 1
+      }
     }
   },
   actions: {
@@ -143,6 +148,9 @@ export default new Vuex.Store({
     },
     removeFromVenda (context, indice) {
       context.commit('excluirFromVenda', indice)
+    },
+    getFlag (context, data) {
+      context.commit('setFlag', data)
     }
   }
 })

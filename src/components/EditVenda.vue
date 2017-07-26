@@ -59,7 +59,7 @@
                   <td>{{ servico.name }}</td>
                   <td>R$ {{ servico.price }},00</td>
                   <td>
-                    <button id='buttonAddServico' v-bind:class="['btn btn-primary glyphicon glyphicon-plus', servico.flag == 1 ? 'disabled' : '']" @click="mudaFlagPlus(servico), getTotal(servico), incluirServico(servico)"></button>
+                    <button v-bind:class="['btn btn-primary glyphicon glyphicon-plus', servico.flag == 1 ? 'disabled' : '']" @click="mudaFlagPlus(servico), getTotal(servico), incluirServico(servico), mudarFlag(servico)"></button>
                   </td>
                 </tr>
               </tbody>
@@ -118,12 +118,12 @@ export default {
       }
       return retorno
     },
-    hideButton: function () {
-      if ($("#buttonAddServico").hasClass("disabled")) {
-        $("#buttonAddServico").hide()
-      } else {
-        $("#buttonAddServico").show()
+    mudarFlag: function (servico) {
+      let informacao = {
+        servico,
+        id: this.$store.state.id
       }
+      this.$store.dispatch('getFlag', informacao)
     },
     mudaFlagPlus: function (data) {
       for (let i=0;i<this.dados.servicos.length;i++) {
@@ -147,8 +147,8 @@ export default {
         id: this.$store.state.id,
         qtdServicos: this.$store.state.vendas[this.$store.state.id].qtdServicos
       }
-      this.$store.dispatch('syncIndiceServico', informacao)
       this.$store.dispatch('incluirServicoAct', informacao)
+      this.$store.dispatch('syncIndiceServico', informacao)
     },
     excluirServico: function (servico) {
       let informacao = {
