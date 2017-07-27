@@ -37,13 +37,14 @@
                   <td>{{ servico.name }}</td>
                   <td>R$ {{ servico.price }},00</td>
                   <td>
-                    <button class="btn btn-danger glyphicon glyphicon-remove" v-if="servico.flag == 1" @click="mudaFlagRemove(servico.id), excluirServico(servico), delTotal(servico)"></button>
+                    <button class="btn btn-danger glyphicon glyphicon-remove btnAlinhado" v-if="servico.flag == 1" @click="mudaFlagRemove(servico.id), excluirServico(servico), delTotal(servico)"></button>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
+
         <div class="row">
           <div class="divServico">
             <h1>Serviços</h1>
@@ -59,13 +60,14 @@
                   <td>{{ servico.name }}</td>
                   <td>R$ {{ servico.price }},00</td>
                   <td>
-                    <button v-bind:class="['btn btn-primary glyphicon glyphicon-plus', servico.flag == 1 ? 'disabled' : '']" :disabled="servico.flag == 1 ? true : false" @click="mudaFlagPlus(servico), getTotal(servico), incluirServico(servico), mudarFlag(servico)"></button>
+                    <button v-bind:class="['btn btn-primary glyphicon glyphicon-plus btnAlinhado', servico.flag == 1 ? 'disabled' : '']" v-if="verifaFlag(servico)" :disabled="servico.flag == 1 ? true : false" @click="mudaFlagPlus(servico), getTotal(servico), incluirServico(servico), mudarFlag(servico)"></button>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -118,6 +120,9 @@ export default {
         }
       }
       return retorno
+    },
+    verifaFlag: function (data) {
+      console.log(data)
     },
     mudarFlag: function (servico) {
       let informacao = {
@@ -214,14 +219,30 @@ export default {
         flag: 2
       })
     }
+
     for (let i=0;i<this.dados.servicos.length;i++) {
-      for (let j=0;j<this.servicos.length;j++){
-        if (this.dados.servicos[i].name == this.servicos[j].name) {
-          this.servicos[j].flag = this.dados.servicos[i].flag
-          console.log(this.dados)
+        for (let j=0;j<this.servicos.length;j++){
+          if (this.dados.servicos[i].name == this.servicos[j].name) {
+            console.log('----------')
+            console.log('Nomes iguais:')
+            console.log('- ' + this.dados.servicos[i].name)
+            console.log('- ' + this.servicos[j].name)
+            this.servicos[j].flag = this.dados.servicos[i].flag
+            console.log('Flags iguais:')
+            console.log('Flag dadoServiço: ' + this.dados.servicos[i].flag)
+            console.log('Flag serviço: ' + this.servicos[j].flag)
+          } else if (this.dados.servicos[i].name != this.servicos[j].name) {
+            console.log('-----------')
+            console.log('Nomes diferentes:')
+            console.log('- ' + this.dados.servicos[i].name)
+            console.log('- ' + this.servicos[j].name)
+            this.servicos[j].flag = 2
+            console.log('Flags diferentes:')
+            console.log('Flag dadoServiço: ' + this.dados.servicos[i].flag)
+            console.log('Flag serviço: ' + this.servicos[j].flag)
+          }
         }
       }
-    }
   },
   computed: {
     servicos () {
@@ -233,5 +254,9 @@ export default {
 </script>
 
 <style>
-
+.btnAlinhado {
+  float: right;
+  margin: 0px 60px 0px 0px;
+}
 </style>
+

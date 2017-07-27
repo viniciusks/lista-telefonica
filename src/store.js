@@ -23,7 +23,6 @@ export default new Vuex.Store({
     },
     setId (state, indice) {
       state.id = indice
-      console.log(state.id)
     },
     setInformacao (state, indice) {
       state.clienteSelecionado = state.contatoList[indice]
@@ -41,7 +40,6 @@ export default new Vuex.Store({
       let dado = state.vendas[data.id].servicos
       state.vendas[data.id].qtdServicos += 1
       dado.push(data.servico)
-      console.log(state.vendas)
     },
     setFlag (state, data) {
       let indice = data.servico.indice
@@ -55,6 +53,9 @@ export default new Vuex.Store({
       state.contatoList[data.id].name = data.inf.name
       state.contatoList[data.id].email = data.inf.email
       state.contatoList[data.id].numero = data.inf.numero      
+    },
+    changeFlag (state, data) {
+      state.servicosList[data.indice2].flag = data.dadosServicos[data.indice1].flag
     },
 
     // pega informações
@@ -132,6 +133,9 @@ export default new Vuex.Store({
     // chama "update"
     editContato (context, data) {      
       context.commit('updateContatoList', data)
+    },
+    updateFlag (context, data) {
+      context.commit('changeFlag', data)
     },
 
     // chama "get's"

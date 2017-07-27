@@ -192,7 +192,9 @@ export default {
       $("document,body").animate({
           scrollTop: $("#cadastroCliente").offset().top
       }, 500)
-      $('#name').focus()
+      setTimeout(function(){
+        $('#name').focus()        
+      }, 100)
     },
     save: function () {
       let informacao = {
@@ -268,9 +270,6 @@ export default {
     }
     if (this.$store.state.servicos.length > 0) {
       this.$store.state.servicos = []
-    }
-    if (this.contato != null) {
-      console.log(this.contato)
     }
     // cria automaticamente caso esteja vazio para testes
     if(this.$store.state.contatoList.length == 0){
