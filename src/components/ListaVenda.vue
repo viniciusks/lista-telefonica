@@ -51,9 +51,6 @@ export default {
     }
   },
   methods: {
-    teste: function (value) {
-      console.log(value)
-    },
     goToEditCompra: function (indice) {
       this.$store.dispatch('getId', indice).then(() => {
         this.$router.push('/edit-compra/' + indice)

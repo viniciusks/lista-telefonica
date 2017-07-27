@@ -13,21 +13,56 @@ export default new Vuex.Store({
     total: 0
   },
   mutations: {
+
+    // inclusão de dados
     setContatoList (state, data) {
       state.contatoList.push(data)      
     },
     setservicoList (state, data) {
       state.servicosList.push(data)
     },
+    setId (state, indice) {
+      state.id = indice
+      console.log(state.id)
+    },
+    setInformacao (state, indice) {
+      state.clienteSelecionado = state.contatoList[indice]
+    },
+    setTotal (state, data) {
+      state.total += data.price
+    },
+    setFinalizar (state, data) {
+      state.vendas.push(data)
+    },
+    setServico (state, data) {
+      state.servicos.push(data)
+    },
+    incluirServicoMut (state, data) {
+      let dado = state.vendas[data.id].servicos
+      state.vendas[data.id].qtdServicos += 1
+      dado.push(data.servico)
+      console.log(state.vendas)
+    },
+    setFlag (state, data) {
+      let indice = data.servico.indice
+      if (state.vendas[data.id].servicos[indice].flag == 2) {
+        state.vendas[data.id].servicos[indice].flag = 1
+      }
+    },
+
+    // update de informações
     updateContatoList (state, data) {      
       state.contatoList[data.id].name = data.inf.name
       state.contatoList[data.id].email = data.inf.email
       state.contatoList[data.id].numero = data.inf.numero      
     },
-    delContato (state, indice) {
-      let contatoList = state.contatoList
-      contatoList.splice(indice, 1)
+
+    // pega informações
+    getTotalVendaMut (state, data) {
+      state.vendas[data.id].total += data.servico.price
     },
+
+    // sincronização de id's e indices
     syncIndicesMut (state) {      
       for(let i=0;i<state.contatoList.length;i++){        
         state.contatoList[i].id = i;
@@ -38,42 +73,24 @@ export default new Vuex.Store({
         state.vendas[data.id].servicos[i].indice = i
       }
     },
-    setId (state, indice) {
-      state.id = indice
-    },
-    setInformacao (state, indice) {
-      state.clienteSelecionado = state.contatoList[indice]
+    
+    // deletar as informações
+    delContato (state, indice) {
+      let contatoList = state.contatoList
+      contatoList.splice(indice, 1)
     },
     delInformacaoStore (state) {
       state.clienteSelecionado = ''
     },
-    setTotal (state, data) {
-      state.total += data.price
-    },
     delTotalMut (state, data) {
       state.total -= data.price
-    },
-    getTotalVendaMut (state, data) {
-      state.vendas[data.id].total += data.servico.price
     },
     delTotalVendaMut (state, data) {
       state.vendas[data.id].total -= data.servico.price
     },
-    setFinalizar (state, data) {
-      state.vendas.push(data)
-    },
-    setServico (state, data) {
-      state.servicos.push(data)
-    },
     delServicoMut (state, data) {
       let servicos = state.servicos
       servicos.splice(data, 1)
-    },
-    incluirServicoMut (state, data) {
-      let dado = state.vendas[data.id].servicos
-      state.vendas[data.id].qtdServicos += 1
-      dado.push(data.servico)
-      console.log(dado)
     },
     excluirServicoMut (state, data) {
       let indice = data.servico.indice
@@ -83,59 +100,65 @@ export default new Vuex.Store({
     },
     excluirFromVenda (state, indice) {
       state.vendas.splice(indice, 1)
-    },
-    setFlag (state, data) {
-      let indice = data.servico.indice
-      if (state.vendas[data.id].servicos[indice].flag == 2) {
-        state.vendas[data.id].servicos[indice].flag = 1
-      }
     }
   },
   actions: {
+    // chama "set's"
     newContato (context, data) {      
       context.commit('setContatoList', data)
     },
     newServico (context, data) {
       context.commit('setservicoList', data)
     },
-    editContato (context, data) {      
-      context.commit('updateContatoList', data)
-    },
     getId (context, indice) {
       context.commit('setId', indice)
-    },
-    removeContato (context, indice) {
-      context.commit('delContato', indice)
-    },
-    syncIndices (context) {
-      context.commit('syncIndicesMut')
-    },
-    syncIndiceServico (context, data) {
-      context.commit('syncIndiceServicoMut', data)
     },
     getInformacao (context, indice) {
       context.commit('setInformacao', indice)
     },
-    delInformacao (context) {
-      context.commit('delInformacaoStore')
-    },
     getTotalAct (context, data) {
       context.commit('setTotal', data)
-    },
-    delTotalAct (context, data) {
-      context.commit('delTotalMut', data)
-    },
-    getTotalVendaAct (context, data) {
-      context.commit('getTotalVendaMut', data)
-    },
-    delTotalVendaAct (context, data) {
-      context.commit('delTotalVendaMut', data)
     },
     getFinalizar (context, data) {
       context.commit('setFinalizar', data)
     },
     getServico (context, data) {
       context.commit('setServico', data)
+    },
+    getFlag (context, data) {
+      context.commit('setFlag', data)
+    },
+
+    // chama "update"
+    editContato (context, data) {      
+      context.commit('updateContatoList', data)
+    },
+
+    // chama "get's"
+    getTotalVendaAct (context, data) {
+      context.commit('getTotalVendaMut', data)
+    },
+
+    // chama "sync's"
+    syncIndices (context) {
+      context.commit('syncIndicesMut')
+    },
+    syncIndiceServico (context, data) {
+      context.commit('syncIndiceServicoMut', data)
+    },
+
+    // chama "excluir"
+    removeContato (context, indice) {
+      context.commit('delContato', indice)
+    },
+    delInformacao (context) {
+      context.commit('delInformacaoStore')
+    },
+    delTotalAct (context, data) {
+      context.commit('delTotalMut', data)
+    },
+    delTotalVendaAct (context, data) {
+      context.commit('delTotalVendaMut', data)
     },
     delServico (context, data) {
       context.commit('delServicoMut', data)
@@ -148,9 +171,6 @@ export default new Vuex.Store({
     },
     removeFromVenda (context, indice) {
       context.commit('excluirFromVenda', indice)
-    },
-    getFlag (context, data) {
-      context.commit('setFlag', data)
     }
   }
 })

@@ -217,6 +217,7 @@ export default {
       for (let j=0;j<this.servicos.length;j++){
         if (this.dados.servicos[i].name == this.servicos[j].name) {
           this.servicos[j].flag = this.dados.servicos[i].flag
+          console.log(this.dados)
         }
       }
     }

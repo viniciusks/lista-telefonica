@@ -19,8 +19,8 @@ export default {
   data: function () {
     return {
       dados: {
-          inf: this.$store.state.contatoList[this.$store.state.id],
-          id: this.$store.state.id
+        inf: this.$store.state.contatoList[this.$store.state.id],
+        id: this.$store.state.id
       }
     }
   },
@@ -28,7 +28,6 @@ export default {
     save: function () {
       this.$store.dispatch('editContato', this.dados).then(() => {
         this.$router.push('/lista')
-        console.log(this.dados.id)
       })
     }
   }
