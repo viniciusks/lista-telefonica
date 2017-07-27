@@ -59,7 +59,7 @@
                   <td>{{ servico.name }}</td>
                   <td>R$ {{ servico.price }},00</td>
                   <td>
-                    <button v-bind:class="['btn btn-primary glyphicon glyphicon-plus', servico.flag == 1 ? 'disabled' : '']" @click="mudaFlagPlus(servico), getTotal(servico), incluirServico(servico), mudarFlag(servico)"></button>
+                    <button v-bind:class="['btn btn-primary glyphicon glyphicon-plus', servico.flag == 1 ? 'disabled' : '']" :disabled="servico.flag == 1 ? true : false" @click="mudaFlagPlus(servico), getTotal(servico), incluirServico(servico), mudarFlag(servico)"></button>
                   </td>
                 </tr>
               </tbody>
@@ -70,6 +70,7 @@
     </div>
   </div>
 </template>
+
 
 <script>
 export default {

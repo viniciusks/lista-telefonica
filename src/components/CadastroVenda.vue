@@ -77,15 +77,15 @@
           </div>
         </div>
         <div class="row">
-          <button class="btn btn-primary btnAdd" @click="permicaoCadastro = 1"><span class="glyphicon glyphicon-plus"></span>Adicionar cliente</button>
-          <div v-if="permicaoCadastro == 1">
-            <form @submit.prevent="save">
+          <button id="cadastroCliente" class="btn btn-primary btnAdd" v-on:click="permicaoCadastro = 1, addCliente()"><span class="glyphicon glyphicon-plus"></span>Adicionar cliente</button>
+          <div v-show="permicaoCadastro == 1" >
+            <form id="form_id" @submit.prevent="save">
               <label>Nome: </label>
-              <input type="text" class="form-control cadastro" v-model="contato.name" id="name" placeholder="Digite o nome do contato...">
+              <input type="text" class="form-control cadastro" id="name" placeholder="Digite o nome do contato...">
               <label>Email: </label>
-              <input type="email" class="form-control cadastro" v-model="contato.email" id="email" placeholder="Digite o email do contato...">
+              <input type="email" class="form-control cadastro" id="email" placeholder="Digite o email do contato...">
               <label>Número: </label>
-              <input type="text" class="form-control cadastro" v-model="contato.numero" id="numero" placeholder="Digite o número do contato...">
+              <input type="text" class="form-control cadastro" id="numero" placeholder="Digite o número do contato...">
               <input type="submit" class="btn btn-primary btnAdd" value="Salvar">
               <input type="text" class="btn btn-danger btnAdd" style="width: 70px;" value="Voltar" @click="permicaoCadastro = 2">
             </form>
@@ -110,11 +110,6 @@ export default {
       controleBotoes: 2,
       count: 0,
       permicaoCadastro: 2,
-      contato: {
-        name: '',
-        email: '',
-        numero: ''
-      },
       colunas: [
         {
           key: 'name',
@@ -125,28 +120,6 @@ export default {
           title: 'Preço'
         }
       ],
-      /*venda: {
-        servicos: [
-          {
-            nome: '',
-            valor: ''
-          },
-          {
-            nome: '',
-            valor: ''
-          },
-          {
-            nome: '',
-            valor: ''
-          }
-        ],
-        cliente: {
-          nome: '',
-          id: ''
-        },
-        valor_total: '',
-        frete: ''
-      },*/
       servicos: [
         {
           id: 0,
@@ -215,10 +188,31 @@ export default {
       }
       return retorno
     },
+    addCliente: function(){
+      $("document,body").animate({
+          scrollTop: $("#cadastroCliente").offset().top
+      }, 500)
+      $('#name').focus()
+    },
     save: function () {
-      this.$store.dispatch('newContato', this.contato).then(() => {
+      let informacao = {
+        name: $('#name').val(),
+        email: $('#email').val(),
+        numero: $('#numero').val()
+      }
+      this.$store.dispatch('newContato', informacao)
+      .then(() => {
         this.$store.dispatch('syncIndices')
-        this.$router.push('/lista')
+      })
+      .then(() => {
+        this.$store.dispatch('getInformacao', informacao.id)
+        $('#name').val('')
+        $('#email').val('')
+        $('#numero').val('')
+      })
+      .then(() => {
+        this.permicaoCadastro = 2
+        this.controleBotoes = 1    
       })
     },
     pegaInformacao: function (indice) {
@@ -274,6 +268,9 @@ export default {
     }
     if (this.$store.state.servicos.length > 0) {
       this.$store.state.servicos = []
+    }
+    if (this.contato != null) {
+      console.log(this.contato)
     }
     // cria automaticamente caso esteja vazio para testes
     if(this.$store.state.contatoList.length == 0){

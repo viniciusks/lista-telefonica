@@ -23,10 +23,7 @@ export default {
   name: 'app',
   style: [
     require('bootstrap/dist/css/bootstrap.min.css')
-  ],
-  /*script: [
-    require('jquery/dist/jquery.min.js')
-  ]*/
+  ]
 }
 </script>
 
@@ -64,4 +61,7 @@ body {
   margin: 5px;
   width: 800px;
 }
+input:focus{
+  border: 1px solid #41b883 !important;
+  }
 </style>

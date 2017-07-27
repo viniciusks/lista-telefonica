@@ -35,11 +35,8 @@ export default {
 </script>
 
 <style>
-  .edit {
-    margin: 5px auto;
-    width: 300px !important;
-  }
-  input:focus{
-  border: 1px solid #41b883 !important;
-  }
+.edit {
+  margin: 5px auto;
+  width: 300px !important;
+}
 </style>
